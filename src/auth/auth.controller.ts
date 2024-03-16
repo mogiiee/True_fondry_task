@@ -1,5 +1,6 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -11,9 +12,8 @@ export class AuthController {
 
   @Get('github/callback')
   @UseGuards(AuthGuard('github'))
-  async githubAuthRedirect(@Req() req) {
-    // GitHub redirects here after authentication
-    // Your user will be in req.user
-    return { user: req.user };
+  githubCallback(@Req() req, @Res() res: Response) {
+      // After successful authentication, redirect to the success page
+      res.redirect('/success.html');
   }
 }
