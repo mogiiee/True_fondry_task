@@ -12,8 +12,11 @@ export class AuthController {
 
   @Get('github/callback')
   @UseGuards(AuthGuard('github'))
-  githubCallback(@Req() req, @Res() res: Response) {
-      // After successful authentication, redirect to the success page
-      res.redirect('/success.html');
+  githubCallback(@Req() req, @Res() res) {
+      const { username, displayName, avatarUrl } = req.user; // Assuming this data is available
+      const queryParams = `?username=${username}&displayName=${displayName}&avatarUrl=${encodeURIComponent(avatarUrl)}`;
+      res.redirect(`/success.html${queryParams}`);
   }
-}
+  
+
+  }

@@ -9,17 +9,19 @@ import { User } from './auth/user.entity';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    TypeOrmModule.forRoot({
+      type: 'sqlite',
+      database: join(__dirname, '../database.sqlite'),
+      entities: [User],
+      synchronize: true,
+    }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
-    TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: 'database.sqlite', // Name of your database file
-      entities: [User], // Add your entities here
-      synchronize: true, // Synchronizes the database with your entities
-    }),
     AuthModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
   ],
 })
 export class AppModule {}

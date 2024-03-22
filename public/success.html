@@ -3,18 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Success</title>
+    <title>GitHub Auth Success</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; display: flex; justify-content: center; align-items: center; height: 100vh; }
-        .container { background-color: #fff; padding: 40px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
-        h2 { color: #333; }
-        p { color: #666; }
+        /* Add your CSS styles */
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .user-info { margin-top: 20px; }
+        img { border-radius: 50%; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Success!</h2>
-        <p>You have successfully linked your GitHub account.</p>
+    <h2>GitHub Authentication Successful</h2>
+    <div class="user-info">
+        <p>Username: <span id="username"></span></p>
+        <p>Display Name: <span id="displayName"></span></p>
+        <p>Avatar: <img id="avatarUrl" src="" alt="Avatar" width="100"></p>
     </div>
+
+    <script>
+        // Parse query parameters from URL
+        function getQueryParams() {
+            const queryParams = {};
+            window.location.search.substring(1).split("&").forEach(param => {
+                let [key, value] = param.split("=");
+                queryParams[key] = decodeURIComponent(value);
+            });
+            return queryParams;
+        }
+
+        // Display user information
+        function displayUserInfo() {
+            const { username, displayName, avatarUrl } = getQueryParams();
+            document.getElementById('username').textContent = username || 'Not provided';
+            document.getElementById('displayName').textContent = displayName || 'Not provided';
+            if (avatarUrl) {
+                document.getElementById('avatarUrl').src = avatarUrl;
+            }
+        }
+
+        displayUserInfo();
+    </script>
 </body>
 </html>
